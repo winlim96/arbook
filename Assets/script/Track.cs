@@ -53,11 +53,22 @@ public class Track : MonoBehaviour
     {
         string name = t.referenceImage.name;
 
-        GameObject o = dict1[name];
-        o.transform.position = t.transform.position;
-        //o.transform.rotation = t.transform.rotation;
+        if (dict1.TryGetValue(name, out GameObject o))
+        {
+            if (t.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
+            {
+                //GameObject o = dict1[name];
+                o.transform.position = t.transform.position;
+                //o.transform.rotation = t.transform.rotation;
 
-        o.SetActive(true);
+                o.SetActive(true);
+            }
+            else
+            {
+                o.SetActive(false);
+            }
+        }
+       
     }
 
     void UpdateSound(ARTrackedImage t)
